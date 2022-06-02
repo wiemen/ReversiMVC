@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ReversiMvcApp.Models.Spel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Spel overzicht</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Omschrijving)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Speler1Token)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Speler2Token)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Omschrijving)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Speler1Token)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Speler2Token)
+            </td>
+
+            <td>
+                <a asp-action="Delete" asp-route-spelId="@item.ID">Verwijderen</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

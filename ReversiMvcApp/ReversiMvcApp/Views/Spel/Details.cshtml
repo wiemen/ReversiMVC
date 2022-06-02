@@ -1,0 +1,88 @@
+﻿@model ReversiMvcApp.Models.Spel
+
+@{
+    ViewData["Title"] = "Details";
+}
+@{
+    var claimsIdentity = User.Identity as System.Security.Claims.ClaimsIdentity;
+    var spelId = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value;
+}
+<div id="spelToken" hidden>@Model.Token</div>
+<div id="spelerToken" hidden>@spelId</div>
+
+
+<h1>Spel</h1>
+
+<h4>@Html.DisplayFor(model => model.Omschrijving)</h4>
+<div id="waiting">
+    <h5>Wachten op andere speler</h5>
+</div>
+<div id="game" class="d-flex flex-row">
+    <div id="spel" class="col-8"></div>
+
+    <div id="spelInfo" class="col-4 border">
+        <h3 class="text-center font-weight-bold">Info</h3>
+        <div class="d-flex flex-row justify-content-center">
+            <div class="font-weight-bold">Beurt: </div>
+            <div id="spelBeurt"></div>
+        </div>
+
+
+        <div class="d-flex flex-row justify-content-center">
+            <button id="pas" class="btn btn-primary mr-2">Pas</button>
+            <button id="opgeven" class="btn btn-primary">Opgeven</button>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex flex-row mt-2">
+    <div class="border container col-6 p-2 mr-2">
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-primary" onclick="Game.Reversi.animeFact()">Genereer een nieuwe anime feitje</button>
+        </div>
+        <div id="animeFact"></div>
+    </div>
+
+    <div class="col-6 border">
+        <canvas id="line-chart" class="chart-container"></canvas>
+    </div>
+</div>
+
+@*Modals*@
+<div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Spel afgelopen</h5>
+            </div>
+            <div id="gameModalBody" class="modal-body"></div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-primary" asp-controller="spel" asp-action="Index">Nieuwe spel zoeken</a>
+                <a type="button" class="btn btn-primary" asp-controller="spel" asp-action="Create">Nieuw spel aanmaken</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="passModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Pas</h5>
+            </div>
+            <div id="passModalBody" class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () { Game.init(afterInit); Game.Reversi.animeFact(); });
+
+    function afterInit() {
+        Spel.init();
+    }
+</script>
