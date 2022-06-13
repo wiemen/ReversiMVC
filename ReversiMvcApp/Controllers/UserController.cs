@@ -10,18 +10,16 @@ namespace ReversiMvcApp.Controllers
     [Authorize(Roles = "Mediator, Beheerder")]
     public class UserController : Controller
     {
-        private readonly ApplicationDbContext _applicationDBContext;
         private readonly ReversiDbContext _reversiDBContext;
 
-        public UserController(ApplicationDbContext applicationDBContext, ReversiDbContext reversiDBContext)
+        public UserController(ReversiDbContext reversiDBContext)
         {
-            _applicationDBContext = applicationDBContext;
             _reversiDBContext = reversiDBContext;
         }
 
         public IActionResult Index()
         {
-            return View(_applicationDBContext.Users);
+            return View(_reversiDBContext.Users);
         }
 
         // GET: Spelers/Delete/5
@@ -32,7 +30,7 @@ namespace ReversiMvcApp.Controllers
                 return NotFound();
             }
 
-            var user = await _applicationDBContext.Users
+            var user = await _reversiDBContext.Users
                 .FirstOrDefaultAsync(m => m.Id == id.ToString());
             if (user == null)
             {
@@ -47,14 +45,14 @@ namespace ReversiMvcApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var user = await _applicationDBContext.Users.FindAsync(id.ToString());
-            _applicationDBContext.Users.Remove(user);
-            await _applicationDBContext.SaveChangesAsync();
+            var user = await _reversiDBContext.Users.FindAsync(id.ToString());
+            _reversiDBContext.Users.Remove(user);
+            await _reversiDBContext.SaveChangesAsync();
 
             try
             {
                 var speler = await _reversiDBContext.Speler.FindAsync(id);
-                _applicationDBContext.Users.Remove(user);
+                _reversiDBContext.Users.Remove(user);
                 await _reversiDBContext.SaveChangesAsync();
             }
             catch (Exception) { }

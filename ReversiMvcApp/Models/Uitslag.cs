@@ -15,5 +15,18 @@ namespace ReversiMvcApp.Models
 
         public bool Opgegeven { get; set; }
         public string Opgever { get; set; }
+
+        public Uitslag() { }
+
+        public Uitslag(int puntenWit, int puntenZwart, Spel spel, Kleur winnaar)
+        {
+            ID = Guid.NewGuid();
+            SpelID = new Guid(spel.Token);
+            Winnaar = winnaar;
+            PuntenWit = puntenWit;
+            PuntenZwart = puntenZwart;
+            Speler1Token = spel.Speler1Token;
+            Speler2Token = spel.Speler2Token;
+        }
     }
 }

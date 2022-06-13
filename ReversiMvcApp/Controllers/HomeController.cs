@@ -1,48 +1,37 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using ReversiMvcApp.Data;
+using ReversiMvcApp.Logic.Interfaces;
 using ReversiMvcApp.Models;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace ReversiMvcApp.Controllers
 {
     public class HomeController : Controller
     {
-        private HttpClient HttpClient { get; set; }
-        private readonly string _uriAction = "Spel";
-        private readonly ReversiDbContext _reversiDbContext;
-        private readonly ApplicationDbContext _context;
+        private ISpelLogic _spelLogic;
+        private IUserLogic _userLogic;
+        private ISpelerLogic _spelerLogic;
 
-        public HomeController(ReversiDbContext reversiDbContext, IHttpClientFactory httpClientFactory, ApplicationDbContext context)
+        public HomeController(ISpelLogic spelLogic, IUserLogic userLogic, ISpelerLogic spelerLogic)
         {
-            HttpClient = httpClientFactory.CreateClient("reversiClient");
-            _reversiDbContext = reversiDbContext;
-            _context = context;
+            _spelLogic = spelLogic;
+            _userLogic = userLogic;
+            _spelerLogic = spelerLogic;
         }
 
         public IActionResult Index()
         {
-            if(User.FindFirst(ClaimTypes.NameIdentifier) != null)
+            Spel spel = null;
+
+            if (User.FindFirst(ClaimTypes.NameIdentifier) != null)
             {
                 var currentUserID = new Guid(User.FindFirst(ClaimTypes.NameIdentifier).Value);
                 RegistreerSpeler(currentUserID);
-
-                var response = HttpClient.GetAsync($"{ _uriAction}/SpelSpeler/{currentUserID}");
-                if (response.Result != null && response.Result.IsSuccessStatusCode)
-                {
-                    var result = JsonConvert.DeserializeObject<Spel>(response.Result.Content.ReadAsStringAsync().Result);
-                    return View("../Spel/Details", result);
-                }
+                spel = _spelLogic.GetBySpelerID(currentUserID.ToString());
             }
 
-            return View();
+            return spel != null ? View("../Spel/Details", spel) : View();
         }
 
         public IActionResult Privacy()
@@ -60,16 +49,16 @@ namespace ReversiMvcApp.Controllers
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier) != null)
             {
-                if (_reversiDbContext.Speler.Find(currentUserID) == null)
+                if (_spelerLogic.GetByID(currentUserID) == null)
                 {
-                    var user = _context.Users.Find(currentUserID.ToString());
+                    var user = _userLogic.GetByID(currentUserID.ToString());
                     var speler = new Speler
                     {
                         ID = currentUserID,
                         Naam = user.UserName,
                     };
-                    _reversiDbContext.Speler.Add(speler);
-                    _reversiDbContext.SaveChanges();
+
+                    _spelerLogic.Add(speler);
                 }
             }
         }
