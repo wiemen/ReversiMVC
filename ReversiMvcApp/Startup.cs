@@ -31,7 +31,7 @@ namespace ReversiMvcApp
 
             services.AddHttpClient("reversiClient", c => c.BaseAddress = new Uri(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetConnectionString("ApiConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedEmail = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ReversiDbContext>();
             services.AddControllersWithViews();
