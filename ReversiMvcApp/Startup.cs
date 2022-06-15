@@ -50,7 +50,7 @@ namespace ReversiMvcApp
                            .AllowAnyMethod()
                            .AllowAnyHeader()
                            .AllowCredentials()
-                           .WithOrigins("http://localhost:8080");
+                           .WithOrigins("http://localhost:5000");
                     });
             });
             services.AddSignalR();
@@ -87,7 +87,9 @@ namespace ReversiMvcApp
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}",
+                    defaults: new { controller = "Home", action = "Index" }
+                    );
                 endpoints.MapRazorPages();
             });
         }
