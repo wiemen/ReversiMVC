@@ -36,19 +36,6 @@ this["spa_templates"]["src"]["templates"]["anime"]["fact"] = Handlebars.template
     + alias4(((helper = (helper = lookupProperty(helpers,"imgUri") || (depth0 != null ? lookupProperty(depth0,"imgUri") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"imgUri","hash":{},"data":data,"loc":{"start":{"line":5,"column":37},"end":{"line":5,"column":47}}}) : helper)))
     + "\" alt=\"Girl in a jacket\">\r\n    </div>\r\n </div>";
 },"useData":true});
-this["spa_templates"]["src"]["templates"]["feedbackWidget"] = this["spa_templates"]["src"]["templates"]["feedbackWidget"] || {};
-this["spa_templates"]["src"]["templates"]["feedbackWidget"]["body"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-    var helper, lookupProperty = container.lookupProperty || function(parent, propertyName) {
-        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
-          return parent[propertyName];
-        }
-        return undefined
-    };
-
-  return "<section class=\"body\">\r\n "
-    + container.escapeExpression(((helper = (helper = lookupProperty(helpers,"bericht") || (depth0 != null ? lookupProperty(depth0,"bericht") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"bericht","hash":{},"data":data,"loc":{"start":{"line":2,"column":1},"end":{"line":2,"column":12}}}) : helper)))
-    + "\r\n </section>";
-},"useData":true});
 this["spa_templates"]["src"]["templates"]["chart"] = this["spa_templates"]["src"]["templates"]["chart"] || {};
 this["spa_templates"]["src"]["templates"]["chart"]["stats"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
@@ -65,6 +52,19 @@ this["spa_templates"]["src"]["templates"]["chart"]["stats"] = Handlebars.templat
     + "],\r\n        label: \"Wit\",\r\n        borderColor: \"#E6E6FA\",\r\n        fill: false\r\n      }, { \r\n        data: ["
     + alias4(((helper = (helper = lookupProperty(helpers,"zwart") || (depth0 != null ? lookupProperty(depth0,"zwart") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"zwart","hash":{},"data":data,"loc":{"start":{"line":11,"column":15},"end":{"line":11,"column":24}}}) : helper)))
     + "],\r\n        label: \"Zwart\",\r\n        borderColor: \"#000000\",\r\n        fill: false\r\n      }\r\n    ]\r\n  },\r\n  options: {\r\n    title: {\r\n      display: true,\r\n      text: 'Aantal veroverd'\r\n    }\r\n  }\r\n});";
+},"useData":true});
+this["spa_templates"]["src"]["templates"]["feedbackWidget"] = this["spa_templates"]["src"]["templates"]["feedbackWidget"] || {};
+this["spa_templates"]["src"]["templates"]["feedbackWidget"]["body"] = Handlebars.template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+    var helper, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+          return parent[propertyName];
+        }
+        return undefined
+    };
+
+  return "<section class=\"body\">\r\n "
+    + container.escapeExpression(((helper = (helper = lookupProperty(helpers,"bericht") || (depth0 != null ? lookupProperty(depth0,"bericht") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"bericht","hash":{},"data":data,"loc":{"start":{"line":2,"column":1},"end":{"line":2,"column":12}}}) : helper)))
+    + "\r\n </section>";
 },"useData":true});
 this["spa_templates"]["src"]["templates"]["spelBord"] = this["spa_templates"]["src"]["templates"]["spelBord"] || {};
 this["spa_templates"]["src"]["templates"]["spelBord"]["bord"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
