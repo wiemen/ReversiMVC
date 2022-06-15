@@ -10,6 +10,7 @@ using System;
 using ReversiMvcApp.Hubs;
 using ReversiMvcApp.Logic.Interfaces;
 using ReversiMvcApp.Logic;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace ReversiMvcApp
 {
@@ -41,20 +42,16 @@ namespace ReversiMvcApp
             services.AddScoped<IUitslagLogic, UitslagLogic>();
             services.AddScoped<ISpelerLogic, SpelerLogic>();
 
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                           .AllowAnyMethod()
-                           .AllowAnyHeader()
-                           .AllowCredentials()
-                           .WithOrigins("http://localhost:5000");
-                    });
-            });
+
             services.AddSignalR();
+            services.AddAuthentication();
+            services.AddRazorPages();
             services.AddMvc();
+
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders = ForwardedHeaders.All;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,7 +76,6 @@ namespace ReversiMvcApp
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseCors();
-            app.UseWebSockets();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<ReversiHub>("/reversiHub", options =>
